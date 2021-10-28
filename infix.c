@@ -1,68 +1,51 @@
-#include <stdio.h>
-#include<ctype.h>
-
+#include<stdio.h>
+#include<conio.h>
 #define SIZE 50
-
 char stack[SIZE];
 int top=-1;
-
- void Push(char elem)
+void push(char elem)
 {
-       stack[++top]=elem;
+    int  val;
+    if(top==SIZE-1)
+    {
+        printf("\n stack overflow!!");
+       
+    }
+    else
+    {
+        stack[++top]=elem;
+    }
 }
-char Pop()
+char pop()
 {
-    return(stack[top--]);
+    if(top==-1)
+    {
+        printf("\n stack is underflow!!");
+       
+    }
+    else
+    {
+        int popele=stack[top--];
+        return popele;
+       
+    }
 }
 int pr(char symbol)
 {
     if(symbol=='^')
     {
         return(3);
+       
     }
-    else if(symbol == '*' ||symbol == '/')
+    else if(symbol=='*'||symbol=='/')
     {
         return(2);
     }
-    else if(symbol == '+'|| symbol =='-')
+    else if(symbol=='+'||symbol=='-')
     {
         return(1);
     }
-    else 
+    else
     {
         return(0);
-        
     }
-}
-    int main()
-    {
-        char infix[50],Postfix[50],ch,elem;
-        int i=0,k=0;
-        printf("Enter Infix Exression :");
-        scanf("%s",infix);
-        Push('#');
-        while ( (ch=infix[i++]) != '\0')
-        {
-            if( ch == '(') Push(ch);
-            else
-            if(isalnum(ch)) Postfix[k++]=ch;
-            else
-            if (ch ==')')
-            {
-                while(stack [top] !='(')
-                 Postfix[k++]=Pop();
-                 elem=Pop();
-            }
-            else 
-            {
-                while(pr(stack[top]) >= pr(ch))
-                Postfix[k++]=Pop();
-                Push(ch);
-            }
-            }
-            while(stack [top] !='#')
-            Postfix[k++]=Pop();
-            Postfix[k]='\0' ;
-            printf("\n Postfix Expression = %s \n",Postfix);
-            
-        }
