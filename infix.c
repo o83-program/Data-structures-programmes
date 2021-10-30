@@ -9,7 +9,7 @@ void push(char elem)
     if(top==SIZE-1)
     {
         printf("\n stack overflow!!");
-       
+        
     }
     else
     {
@@ -21,13 +21,13 @@ char pop()
     if(top==-1)
     {
         printf("\n stack is underflow!!");
-       
+        
     }
     else
     {
         int popele=stack[top--];
         return popele;
-       
+        
     }
 }
 int pr(char symbol)
@@ -35,7 +35,7 @@ int pr(char symbol)
     if(symbol=='^')
     {
         return(3);
-       
+        
     }
     else if(symbol=='*'||symbol=='/')
     {
@@ -49,3 +49,37 @@ int pr(char symbol)
     {
         return(0);
     }
+}
+
+int main()
+{
+    char infix[50],postfix[50],ch,elem;
+    int i=0,k=0;
+    printf("\n enter the postfix expression:");
+    scanf("%s",infix);
+    push('#');
+    while((ch=infix[i++])!='\0')
+    {
+        if(ch=='(')
+        push(ch);
+        else if(isalnum(ch))
+        postfix[k++]=ch;
+        else if(ch==')')
+        {
+            while(stack[top]!='(')
+            postfix[k++]=pop();
+            elem=pop();
+        }
+        else
+        {
+            while(pr(stack[top]>=pr(ch)))
+            postfix[k++]=pop();
+            push(ch);
+        }
+    }
+    while(stack[top]!='#')
+    postfix[k++]=pop();
+    postfix[k]='\0';
+    printf("\n postfix expression=%s",postfix);
+}
+      
